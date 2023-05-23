@@ -1,0 +1,103 @@
+---
+import { Icon } from 'astro-icon'
+
+export interface Props {
+	href: string;
+	iconpack: string;
+	icon: string;
+	text: string;
+	bg: string;
+	id: string;
+}
+
+const { href, icon, iconpack, text, id } = Astro.props;
+const bg = Astro.props.bg || '#aaa';
+---
+<div id={id + "div"}>
+	<a href={href} target="_blank" id={id + "link"}>
+		<Icon pack={iconpack} name={icon}/>
+		<p id={id}>{text}</p>
+	</a>
+</div>
+
+<script>
+	const spotifytxt = document.getElementById("spotifytxt");
+	const getStatus = async (): Promise<void> => {
+		try {
+			const response = await fetch("https://api.lanyard.rest/v1/users/441666718507597834");
+			let data = await response.json();
+
+			let spotifystatus = data.data.spotify;
+			if (spotifystatus == null) {
+
+				spotifytxt.textContent = "Not Playing Anything";
+				document.getElementById("spotifytxtlink").setAttribute("href", "#");
+
+			} else {
+				
+				let artists = spotifystatus.artist.split("; ");
+				let song = spotifystatus.song.substring(0, 30);
+				if (song.length == 30) {
+					song += "...";
+				}
+				let artist = artists[0].substring(0, 20);
+				if (artist.length == 20) {
+					artist += "...";
+				}
+
+				spotifytxt.textContent = artist + " - " + song;
+				document.getElementById("spotifytxtlink").setAttribute("href", "https://open.spotify.com/track/" + spotifystatus.track_id);
+
+			}
+
+			data = data.data.discord_status;
+			if (!(data == "dnd" || data == "online" || data == "idle")) {
+
+			} 
+		} catch (error) {
+
+			// Error - Assume Offline
+			return;
+
+		}
+	};
+	getStatus();
+	setInterval(getStatus, 5000);
+</script>
+
+<style define:vars={{ bg }}>
+	div {
+		background-color: var(--bg);
+		display: flex;
+		width: fit-content;
+		justify-content: center;
+		border-radius: 5em;
+		font-size: 1.5em;
+		margin-top: 0.9em;
+		margin-right: 1em;
+		-webkit-box-shadow:0px 0px 12px 0px var(--bg);
+		-moz-box-shadow: 0px 0px 12px 0px var(--bg);
+		box-shadow: 0px 0px 12px 0px var(--bg);
+		transition: 0.4s;
+	}
+	div:hover {
+		-webkit-box-shadow:0px 0px 24px 0px var(--bg);
+		-moz-box-shadow: 0px 0px 24px 0px var(--bg);
+		box-shadow: 0px 0px 24px 0px var(--bg);
+	}
+	a {
+		display: flex;
+		padding: 0.2em 1em;
+		border-radius: 50px;
+		font-weight: 600;
+	}
+	svg {
+		height: 36px;
+		margin-right: 0.35em;
+	}
+	@media (max-width: 1040px) {
+		#spotifytxtdiv {
+			display: none;
+		}
+	}
+</style>

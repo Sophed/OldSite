@@ -1,0 +1,45 @@
+---
+import "@fontsource-variable/roboto-flex";
+
+export interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description">
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+<style is:global>
+	body {
+		overflow-x: hidden;
+		background-color: #020202;
+		color: white;
+		font-family: "Roboto Flex Variable", sans-serif;
+		font-weight: 400;
+		padding-top: 14rem;
+		padding-left: 10rem;
+	}
+	h1 {
+		font-weight: 700;
+	} 
+	@media (max-width: 1040px) {
+		body {
+			padding-left: 3rem;
+			margin-right: 3rem;
+			padding-top: 4rem;
+		}
+	}
+</style>
