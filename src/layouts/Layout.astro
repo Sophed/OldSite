@@ -29,17 +29,30 @@ const { title } = Astro.props;
 		color: white;
 		font-family: "Roboto Flex Variable", sans-serif;
 		font-weight: 400;
-		padding-top: 11rem;
-		padding-left: 10rem;
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none;  /* IE 10+ */
+	}
+	body::-webkit-scrollbar {
+  		background: transparent; /* Chrome/Safari/Webkit */
+		width: 0;
 	}
 	h1 {
 		font-weight: 700;
 	} 
 	@media (max-width: 1040px) {
-		body {
-			padding-left: 3rem;
-			margin-right: 3rem;
+		section {
+			padding-left: 2rem;
 			padding-top: 4rem;
 		}
+	} @media (min-width: 1040px) {
+		section {
+			padding-top: 18vh;
+			padding-left: 10rem;
+		}
+	}
+	section {
+		min-height: 100vh;
+		width: 100vw;
+		justify-content: center;
 	}
 </style>
