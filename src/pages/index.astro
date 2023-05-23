@@ -10,35 +10,97 @@ import Icon from 'astro-icon'
 
 
 <Layout title="Soph.systems">
-	<main>
+	<main id="main">
+		<section>
 
-		<h1 class="text-6xl font-semibold">&lt;/&gt;<b class="font-bold">Sophed</b></h1>
-		<Status bg="#66FF99" />
+			<h1 class="text-6xl font-semibold mb-2">&lt;/&gt;<b class="font-bold">Sophed</b></h1>
+			<Status bg="#66FF99" />
 
-		<div style="display: flex" id="pills">
-			<Pill href="https://github.com/Sophed/" iconpack="mdi" icon="github" text="GitHub" bg="#1B1B1B" id=""/>
-			<Pill href="#" iconpack="ic" icon="baseline-discord" text="Discord" bg="#404EED" id=""/>
-			<Pill href="#" iconpack="mdi" icon="spotify" text="Loading..." bg="#1ED760" id="spotifytxt"/>
-		</div>
-
-		<Bar width="64rem" />
-
-		<div>
-			<h2 class="text-4xl font-bold">Full-Stack Developer & Security Analyst</h2>
-			<p class="text-2xl">Hey! I'm Sophie, a student developer learning web development and now leaning more towards cyber security including research and pentesting to look for work in the field. Over the past year I have spent time learning and expanding the scope of my experience.</p>
-		</div>
-
-		<Icon pack="mdi" name="keyboard-arrow-down"/>
-
-		<div class="mb-20">
-			<h1 class="text-6xl font-semibold mb-4">&lt;/&gt;<b class="font-bold">Projects</b></h1>
-			<div class="ml-12">
-				<p class="text-2xl">Project1</p>
-				<p class="text-2xl">Project2</p>
+			<div style="display: flex" id="pills">
+				<Pill href="https://github.com/Sophed/" iconpack="mdi" icon="github" text="GitHub" bg="#1D1D1D" id=""/>
+				<Pill href="#" iconpack="ic" icon="baseline-discord" text="Discord" bg="#404EED" id=""/>
+				<Pill href="#" iconpack="mdi" icon="spotify" text="Loading..." bg="#1ED760" id="spotifytxt"/>
 			</div>
-		</div>
 
+			<Bar width="64rem" />
+
+			<div>
+				<h2 class="text-4xl font-bold">Full-Stack Developer & Security Analyst</h2>
+				<p class="text-2xl">Hey! I'm Sophie, a student developer learning web development and now leaning more towards cyber security including research and pentesting to look for work in the field. Over the past year I have spent time learning and expanding the scope of my experience.</p>
+			</div>
+
+			<Icon pack="mdi" name="keyboard-arrow-down"/>
+
+		</section>
+
+		<section>
+
+			<div>
+				<h1 class="text-6xl font-semibold mb-8">&lt;/&gt;<b class="font-bold">Projects</b></h1>
+
+				<Pill href="#" iconpack="mdi" icon="globe" text="Personal Site" bg="#aa80ff" id=""/>
+				<p class="text-2xl mt-2 mb-4">You're already here silly! This is my debatably-nice-looking website to display my skills, projects and other information :)</p>
+
+				<Pill href="https://github.com/VoidDevel/VOIDCore" iconpack="simple-icons" icon="playcanvas" text="VOIDCore" bg="#aa80ff" id=""/>
+				<p class="text-2xl mt-2 mb-4">A lightweight Minecraft server plugin, using familiar systems to provide a set of essential features.</p>
+
+				<Pill href="https://colours.sophe.dev" iconpack="gis" icon="color" text="Colour Generator" bg="#aa80ff" id=""/>
+				<p class="text-2xl mt-2 mb-4">A simple ReactJS app which generates random colours and allows you to copy their hex codes.</p>
+				
+			</div>
+
+			<!-- 
+			<Icon pack="mdi" name="keyboard-arrow-down"/>
+			 -->
+		</section>
 	</main>
+	<script>
+		// https://codepen.io/Neil98/pen/VREJZb
+		const body = document.body;
+		const main = document.getElementById('main');
+		let sx = 0,
+		sy = 0;
+		let dx = sx,
+		dy = sy;
+		body.style.height = main.clientHeight + 'px';
+		main.style.position = 'fixed';
+		window.addEventListener('scroll', easeScroll);
+		function easeScroll() {
+			sx = window.pageXOffset;
+			sy = window.pageYOffset;
+		}
+		window.requestAnimationFrame(render);
+		function render(){
+			dx = li(dx,sx,0.07);
+			dy = li(dy,sy,0.07);
+			dx = Math.floor(dx * 100) / 100;
+			dy = Math.floor(dy * 100) / 100;
+			main.style.transform = `translate3d(-${dx}px, -${dy}px, 0px)`;
+			window.requestAnimationFrame(render);
+		}
+		function li(a, b, n) {
+			return (1 - n) * a + n * b;
+		}
+
+		// https://youtu.be/CZIJKkwc8l8
+		const cursor = document.getElementById('cursor');
+		const trailer = document.getElementById('trailer');
+		window.onmousemove = e => {
+			const x = e.clientX - cursor.offsetWidth / 2,
+			y = e.clientY - cursor.offsetHeight / 2 + window.scrollY;
+			cursor.style.transform = `translate(${x}px, ${y}px)`;
+
+			const keyframes = {
+				transform: `translate(${x}px, ${y}px)`,
+			}
+
+			trailer.animate(keyframes, {
+				duration: 900,
+				fill: 'forwards',
+				easing: 'ease',
+			});
+		}
+	</script>
 </Layout>
 
 
@@ -68,7 +130,7 @@ import Icon from 'astro-icon'
 	}
 	svg {
 		height: 86px;
-		margin: 1.8em 0 4.2em 0;
+		margin: 6em;
 	}
 	@media (max-width: 1318px) {
 		#pills {
